@@ -1,7 +1,7 @@
 <template>
   <div class="cover"></div>
-  <section class="modal">
-    <div
+  <article class="modal">
+    <section
       class="modal__hero"
       :style="{ backgroundImage: `url(${require('../assets/hero.png')})` }"
     >
@@ -19,8 +19,8 @@
           />
         </svg>
       </button>
-    </div>
-    <div class="modal__info-character">
+    </section>
+    <section class="modal__info-character">
       <div
         class="modal__avatar"
         :style="{ backgroundImage: `url(${character.image})` }"
@@ -32,17 +32,30 @@
       <p class="modal__status">{{ character.status }}</p>
       <p class="modal__name">{{ character.name }}</p>
       <p class="modal__species">{{ character.species }}</p>
+    </section>
+    <div class="modal__sections-container">
+      <section class="modal__section">
+        <h3 class="modal__title-section">Información</h3>
+
+        <div class="modal__info-cards-container">
+          <ModalInfoCard :title="'Gender'" :label="character.gender" />
+          <ModalInfoCard :title="'Origin'" :label="character.origin.name" />
+          <ModalInfoCard :title="'Type'" :label="character.type || 'Unknown'" />
+        </div>
+      </section>
     </div>
-  </section>
+  </article>
 </template>
 
 <script>
 import Star from "./Star";
+import ModalInfoCard from "./ModalInfoCard";
 import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
     Star,
+    ModalInfoCard,
   },
   setup() {
     const store = useStore();
@@ -140,6 +153,7 @@ export default {
     font-size: 12px;
     font-weight: 500;
     margin-bottom: 5px;
+    text-transform: uppercase;
   }
 
   &__name {
@@ -152,6 +166,7 @@ export default {
     font-size: 12px;
     font-weight: 500;
     margin-bottom: 5px;
+    text-transform: uppercase;
   }
 
   &__favorite {
@@ -159,6 +174,26 @@ export default {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  &__sections-container {
+    padding: 0 21px;
+  }
+
+  &__section {
+    border-bottom: 1px solid #E0E0E0;
+    padding: 21px 0;
+  }
+
+  &__title-section {
+    font-size: 20px;
+    margin-bottom: 17px;
+  }
+
+  &__info-cards-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 </style>
