@@ -57,11 +57,11 @@
 </template>
 
 <script>
-import Star from "../Star";
+import Star from "../FavoriteStar";
 import ModalInfoCard from "./ModalInfoCard";
 import ModalEpisodeCard from "./ModalEpisodeCard";
 import ModalHero from "./ModalHero";
-import Card from "../Card";
+import Card from "../CharacterCard";
 import { computed } from "vue";
 import { useStore } from "vuex";
 export default {

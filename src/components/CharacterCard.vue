@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Star from "./Star";
+import Star from "./FavoriteStar";
 
 export default {
   props: ["character"],

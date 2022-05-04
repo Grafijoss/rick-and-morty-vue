@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Search from "./Search";
+import Search from "./SearchCharacter";
 export default {
   components: {
     Search,

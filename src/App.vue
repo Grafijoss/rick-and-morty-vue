@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import Hero from "./components/Hero";
-import Filters from "./components/Filters";
+import Hero from "./components/CharacterHero";
+import Filters from "./components/CharacterFilters";
 import CharactersContainer from "./components/CharactersContainer";
-import Footer from "./components/Footer";
-import Modal from "./components/modal/Modal";
+import Footer from "./components/CharacterFooter";
+import Modal from "./components/modal/CharacterModal";
 import { computed } from "vue";
 import { useStore } from "vuex";
 export default {

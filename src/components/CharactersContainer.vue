@@ -8,7 +8,7 @@
 
 <script>
 import FavoriteFilter from "./FavoriteFilter";
-import Pager from "./Pager";
+import Pager from "./PagerPages";
 import CardsList from "./CardsList";
 export default {
   components: {

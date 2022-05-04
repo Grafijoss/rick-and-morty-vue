@@ -21,7 +21,7 @@
 <script>
 import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
-import Card from "./Card";
+import Card from "./CharacterCard";
 
 export default {
   components: {

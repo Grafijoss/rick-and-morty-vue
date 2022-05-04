@@ -7,7 +7,7 @@
 
 <script>
 import { ref } from "vue";
-import Star from "./Star";
+import Star from "./FavoriteStar";
 export default {
   components: {
     Star,
