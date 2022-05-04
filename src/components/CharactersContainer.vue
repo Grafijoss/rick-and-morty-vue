@@ -1,17 +1,20 @@
 <template>
   <main class="characters-container">
     <FavoriteFilter />
+    <Pager />
     <CardsList />
   </main>
 </template>
 
 <script>
 import FavoriteFilter from "./FavoriteFilter";
+import Pager from "./Pager";
 import CardsList from "./CardsList";
 export default {
   components: {
     FavoriteFilter,
     CardsList,
+    Pager,
   },
 };
 </script>

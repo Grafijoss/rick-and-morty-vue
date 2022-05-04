@@ -29,8 +29,10 @@ export default {
 
 <style lang="scss">
 .favorite {
-  display: flex;
   align-items: center;
+  display: flex;
+  float: left;
+  margin-bottom: 22px;
   &__label {
     font-size: 14px;
     margin-right: 10px;

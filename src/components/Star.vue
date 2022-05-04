@@ -22,7 +22,7 @@ export default {
 
 <style lang="scss">
 .star {
-  background: var(--background-favorite);
+  background: var(--background-gray);
   border-radius: 50%;
   cursor: pointer;
   display: flex;

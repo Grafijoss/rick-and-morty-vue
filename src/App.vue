@@ -5,6 +5,7 @@
     <CharactersContainer />
     <Footer />
   </div>
+  <Modal v-if="modal.open" />
 </template>
 
 <script>
@@ -12,6 +13,9 @@ import Hero from "./components/Hero";
 import Filters from "./components/Filters";
 import CharactersContainer from "./components/CharactersContainer";
 import Footer from "./components/Footer";
+import Modal from "./components/Modal";
+import { computed } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "App",
   components: {
@@ -19,23 +23,34 @@ export default {
     Filters,
     CharactersContainer,
     Footer,
+    Modal,
+  },
+  setup() {
+    const store = useStore();
+
+    const modal = computed(() => store.state.modal);
+
+    return {
+      modal,
+    };
   },
 };
 </script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@700&display=swap");
 
 :root {
   --background-body: #FFFFFF;
   --background-card: #3C3E44;
+  --background-gray: #E0E0E0;
+  --background-active: #34C759;
   --text-white: #FFFFFF;
   --text-black: #000000;
   --text-gray: #828282;
   --text-orange: #FF9800;
-  --background-active: #34C759;
   --width-container: 1120px;
-  --background-favorite: #E0E0E0;
 }
 * {
   box-sizing: border-box;
@@ -46,6 +61,7 @@ body {
   background-color: var(--background-body);
   color: var(--text-black);
   font-family: "Montserrat", sans-serif;
+  font-weight: 400;
 }
 h1 {
   margin-bottom: 3rem;

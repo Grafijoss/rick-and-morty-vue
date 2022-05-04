@@ -1,9 +1,19 @@
 <template>
-  <div class="cards-container">
+  <div class="not-found-container" v-if="!characters">
+    <h3 class="not-found-container__title">Uh-oh!</h3>
+    <p class="not-found-container__description">
+      ¡Pareces perdido en tu viaje!
+    </p>
+    <button class="not-found-container__button" @click="handlerRemoveFilters">
+      Eliminar filtros
+    </button>
+  </div>
+  <div class="cards-container" v-else>
     <div
       class="cards-container__item"
       v-for="character in characters"
       :key="character.id"
+      @click="handllerOpenModal(character)"
     >
       <Card :character="character" />
     </div>
@@ -21,16 +31,30 @@ export default {
   },
   setup() {
     const store = useStore();
-    const characters = computed(() => {
-      return store.state.charactersFilter;
-    });
+    const characters = computed(() => store.state.charactersFilter);
+
+    const handlerRemoveFilters = () => {
+      store.dispatch("getAllCharacters");
+    };
+
+    const handllerOpenModal = (character) => {
+      store.dispatch("openModal", character);
+    };
 
     onMounted(() => {
-      store.dispatch("getAllCharacters");
+      let localState = localStorage.getItem("state");
+      if (localState) {
+        localState = JSON.parse(localState);
+        store.dispatch("getAllCharactersFromLocalStorage", localState);
+      } else {
+        store.dispatch("getAllCharacters");
+      }
     });
 
     return {
       characters,
+      handlerRemoveFilters,
+      handllerOpenModal,
     };
   },
 };
@@ -48,10 +72,43 @@ export default {
   place-items: center;
 
   &__item {
-    width: 100%;
-    height: 140px;
     border: 1px solid #E0E0E0;
     border-radius: 20px;
+    cursor: pointer;
+    height: 140px;
+    width: 100%;
+  }
+}
+
+.not-found-container {
+  align-items: center;
+  display: flex;
+  font-family: "Lato", sans-serif;
+  flex-direction: column;
+  height: 400px;
+  justify-content: center;
+  margin-top: 22px;
+  width: 100%;
+
+  &__title {
+    font-weight: 700;
+    font-size: 36px;
+    margin-bottom: 15px;
+  }
+
+  &__description {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__button {
+    background: #11555F;
+    border-radius: 60px;
+    color: var(--text-white);
+    cursor: pointer;
+    line-height: 44px;
+    padding: 0 20px;
+    width: 156px;
   }
 }
 </style>

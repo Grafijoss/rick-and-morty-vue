@@ -15,12 +15,30 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 export default {
   setup() {
     const name = ref("");
     const store = useStore();
+
+    watch(
+      () => store.state.filter,
+      function () {
+        if (store.state.filter.value !== "") {
+          name.value = "";
+        }
+      }
+    );
+
+    watch(
+      () => store.state.matchName,
+      function () {
+        if (store.state.matchName !== "") {
+          name.value = store.state.matchName;
+        }
+      }
+    );
 
     const findCharacterByName = (e) => {
       e.preventDefault();
