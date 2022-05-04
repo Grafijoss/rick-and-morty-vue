@@ -6,7 +6,7 @@
     <p class="episode-card__big-label">
       {{ episode.episode }}
     </p>
-    <p class="episode-card__label">
+    <p class="episode-card__label air-date">
       {{ episode.air_date }}
     </p>
   </div>

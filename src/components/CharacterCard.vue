@@ -20,7 +20,7 @@
         {{ character.name }}
       </p>
       <p class="card__label">Location:</p>
-      <p class="card_value">
+      <p class="card__value">
         {{ character.location.name }}
       </p>
     </div>
