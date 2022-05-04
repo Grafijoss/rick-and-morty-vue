@@ -50,6 +50,8 @@ export default {
 .card {
   box-sizing: border-box;
   border-radius: 10px;
+  border: 1px solid #E0E0E0;
+  cursor: pointer;
   height: 140px;
   overflow: hidden;
   width: 100%;

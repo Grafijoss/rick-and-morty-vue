@@ -9,14 +9,12 @@
     </button>
   </div>
   <div class="cards-container" v-else>
-    <div
-      class="cards-container__item"
+    <Card
       v-for="character in characters"
       :key="character.id"
       @click="handllerOpenModal(character)"
-    >
-      <Card :character="character" />
-    </div>
+      :character="character"
+    />
   </div>
 </template>
 
@@ -70,14 +68,6 @@ export default {
   gap: 20px;
   place-content: center;
   place-items: center;
-
-  &__item {
-    border: 1px solid #E0E0E0;
-    border-radius: 20px;
-    cursor: pointer;
-    height: 140px;
-    width: 100%;
-  }
 }
 
 .not-found-container {
@@ -102,7 +92,7 @@ export default {
   }
 
   &__button {
-    background: #11555F;
+    background: var(--background-green);
     border-radius: 60px;
     color: var(--text-white);
     cursor: pointer;

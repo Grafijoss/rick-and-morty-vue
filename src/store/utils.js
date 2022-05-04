@@ -22,4 +22,18 @@ const saveLocal = ({ state, infoWithCurrentPage }) => {
   );
 };
 
-export { getCurrentPage, saveLocal };
+const getRandomArray = () => {
+  const randomArray = [];
+
+  while (randomArray.length < 100) {
+    randomArray.push(randomArray.length + 1);
+  }
+
+  randomArray.sort(() => Math.random() - 0.5);
+
+  return randomArray.slice(0, 3);
+};
+
+const mapResponses = (responses) => responses.map((res) => res.data);
+
+export { getCurrentPage, saveLocal, getRandomArray, mapResponses };

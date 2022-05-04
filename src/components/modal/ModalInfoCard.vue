@@ -37,8 +37,13 @@ export default {
   justify-content: center;
   padding: 0 12px;
   width: 163px;
+
   &__label {
     font-size: 11px;
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+    }
   }
 
   &__big-label {

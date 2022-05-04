@@ -1,5 +1,11 @@
 import { createStore } from "vuex";
-import { getCurrentPage, saveLocal } from "./utils";
+import axios from "axios";
+import {
+  getCurrentPage,
+  saveLocal,
+  getRandomArray,
+  mapResponses
+} from "./utils";
 
 export default createStore({
   state: {
@@ -14,7 +20,9 @@ export default createStore({
     },
     modal: {
       open: false,
-      character: {}
+      character: {},
+      interestingCharacters: [],
+      episodes: []
     }
   },
   mutations: {
@@ -38,13 +46,50 @@ export default createStore({
     }
   },
   actions: {
-    openModal({ commit }, character) {
-      commit("setModal", {
-        open: true,
-        character
-      });
+    async openModal({ commit }, character) {
+      const randomArray = getRandomArray();
+
+      try {
+        const getInterestingCharacters = () => {
+          return axios
+            .get(`https://rickandmortyapi.com/api/character/${randomArray}`)
+            .then((res) => res.data);
+        };
+
+        const interestingCharacters = await getInterestingCharacters();
+
+        const getCharacterEpisodes = () => {
+          const characterEpisodes =
+            character.episode.length > 8
+              ? character.episode.slice(0, 8)
+              : character.episode;
+
+          const episodesPromises = characterEpisodes.map((url) =>
+            axios.get(url)
+          );
+
+          return axios.all(episodesPromises).then(
+            axios.spread((...responses) => {
+              return mapResponses(responses);
+            })
+          );
+        };
+
+        const episodes = await getCharacterEpisodes();
+        document.body.style.overflow = "hidden";
+
+        commit("setModal", {
+          open: true,
+          character,
+          interestingCharacters,
+          episodes
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
     closeModal({ commit }) {
+      document.body.style.overflow = null;
       commit("setModal", {
         open: false,
         character: {}
@@ -85,8 +130,10 @@ export default createStore({
       } = localState;
 
       try {
-        const response = await fetch(url);
-        const { info, results } = await response.json();
+        const response = () => {
+          return axios.get(url).then((res) => res.data);
+        };
+        const { info, results } = await response();
 
         const infoWithCurrentPage = {
           ...info,
@@ -110,8 +157,10 @@ export default createStore({
       const formatName = name.toLowerCase();
       const url = `https://rickandmortyapi.com/api/character/?name=${formatName}`;
       try {
-        const response = await fetch(url);
-        const { info, results } = await response.json();
+        const response = () => {
+          return axios.get(url).then((res) => res.data);
+        };
+        const { info, results } = await response();
 
         const infoWithCurrentPage = {
           ...info,
@@ -126,17 +175,18 @@ export default createStore({
         commit("setMatchName", name);
         saveLocal({ state, infoWithCurrentPage });
       } catch (error) {
-        console.log({
-          error
-        });
+        commit("setCharacters", undefined);
+        commit("setCharactersFilter", undefined);
       }
     },
     async getCharactersByFilter({ commit, state }, { type, value }) {
       const url = `https://rickandmortyapi.com/api/character/?${type}=${value}`;
 
       try {
-        const response = await fetch(url);
-        const { info, results } = await response.json();
+        const response = () => {
+          return axios.get(url).then((res) => res.data);
+        };
+        const { info, results } = await response();
 
         const infoWithCurrentPage = {
           ...info,
@@ -150,28 +200,6 @@ export default createStore({
         commit("setFilter", { type, value });
         commit("setMatchName", "");
         saveLocal({ state, infoWithCurrentPage });
-      } catch (error) {
-        console.log({
-          error
-        });
-      }
-    },
-    async getMultipleCharacters({ commit }) {
-      const randomArray = [];
-
-      while (randomArray.length < 100) {
-        randomArray.push(randomArray.length + 1);
-      }
-
-      randomArray.sort(() => Math.random() - 0.5);
-
-      try {
-        const response = await fetch(
-          `https://rickandmortyapi.com/api/character/${randomArray}`
-        );
-        const data = await response.json();
-        commit("setCharacters", data);
-        commit("setCharactersFilter", data);
       } catch (error) {
         console.log({
           error

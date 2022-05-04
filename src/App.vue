@@ -13,7 +13,7 @@ import Hero from "./components/Hero";
 import Filters from "./components/Filters";
 import CharactersContainer from "./components/CharactersContainer";
 import Footer from "./components/Footer";
-import Modal from "./components/Modal";
+import Modal from "./components/modal/Modal";
 import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
@@ -46,6 +46,7 @@ export default {
   --background-card: #3C3E44;
   --background-gray: #E0E0E0;
   --background-active: #34C759;
+  --background-green: #11555F;
   --text-white: #FFFFFF;
   --text-black: #000000;
   --text-gray: #828282;
